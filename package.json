@@ -1,0 +1,16 @@
+{
+  "name": "my-vanilla-spa",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "ts-node server.ts",
+    "build": "ts-node build.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "typescript": "^5.9.3",
+    "esbuild": "^0.25.12",
+    "ts-node": "^10.9.2",
+    "terser": "^5.22.0"
+  },
+  "type": "module"
+}
