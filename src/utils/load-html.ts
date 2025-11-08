@@ -22,7 +22,6 @@ export async function loadHtml(path: string): Promise<string> {
 
   for (const match of matches) {
     const includePath = match[1];
-    console.log(`Including HTML from ${includePath}`);
     const includeHtml = await loadHtml(includePath);
     html = html.replace(match[0], includeHtml);
   }

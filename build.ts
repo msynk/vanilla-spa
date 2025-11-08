@@ -32,17 +32,19 @@ async function build(): Promise<void> {
 
 function collectHtmlFiles(dir: string): string[] {
   let results: string[] = []
+
   for (const file of fs.readdirSync(dir)) {
-    const fullPath = path.join(dir, file)
-    const stat = fs.statSync(fullPath)
-    if (stat.isDirectory()) results = results.concat(collectHtmlFiles(fullPath))
-    else if (path.extname(file) === '.html') results.push(fullPath)
+    const fullPath = path.join(dir, file);
+    const stat = fs.statSync(fullPath);
+    if (stat.isDirectory()) results = results.concat(collectHtmlFiles(fullPath));
+    else if (path.extname(file) === '.html') results.push(fullPath);
   }
-  return results
+
+  return results;
 }
 
 function generateTemplatesJS(htmlFiles: string[]): string {
-  const templates: Record<string, string> = {}
+  const templates: Record<string, string> = {};
 
   for (const filePath of htmlFiles) {
     const relPath = path.relative(__dirname, filePath).replace(/\\/g, '/');
@@ -53,18 +55,23 @@ function generateTemplatesJS(htmlFiles: string[]): string {
     templates['./' + relPath] = html;
   }
 
-  const output =`window.templates = ${JSON.stringify(templates, null, 2)};\n`;
+  const output = `window.templates = ${JSON.stringify(templates, null, 2)};\n`;
   return output;
 }
 
 function copyRecursive(src: string, dest: string): void {
-  fs.mkdirSync(dest, { recursive: true })
+  fs.mkdirSync(dest, { recursive: true });
+
   for (const file of fs.readdirSync(src)) {
-    const srcPath = path.join(src, file)
-    const destPath = path.join(dest, file)
-    const stat = fs.statSync(srcPath)
-    if (stat.isDirectory()) copyRecursive(srcPath, destPath)
-    else fs.copyFileSync(srcPath, destPath)
+    const srcPath = path.join(src, file);
+    const destPath = path.join(dest, file);
+    const stat = fs.statSync(srcPath);
+    if (stat.isDirectory()) {
+      copyRecursive(srcPath, destPath);
+    }
+    else {
+      fs.copyFileSync(srcPath, destPath);
+    }
   }
 }
 
