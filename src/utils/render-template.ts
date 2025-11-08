@@ -3,7 +3,7 @@ export function renderTemplate(
     data: Record<string, string | number> = {}
 ): string {
     return html.replace(/\{\{(.*?)\}\}/g, (_, key) => {
-        const value = data[key.trim()]
-        return value !== undefined ? String(value) : ''
+        const value = data[key.trim()];
+        return value !== undefined ? String(value) : '';
     })
 }
